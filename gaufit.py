@@ -26,6 +26,25 @@ def func(x, a, x0, s, a2, x02, s2):
     return a*np.exp(-(x-x0)**2/(2*s**2)) + a2*np.exp(-(x-x02)**2/(2*s2**2))
 
 #TODO: Input file here
+
+
+import sys
+from optparse import OptionParser
+
+usage = "usage: %prog options"
+parser = OptionParser(usage=usage);
+
+# O1 for Option 
+parser.add_option("--O1", type = '', dest = 'O1', default=None, 
+	help = 'Help for Option 1');
+
+(options, args) = parser.parse_args();
+
+if len(sys.argv)==1: 
+	parser.print_help();
+	dummy = sys.exit(0);
+
+
 data = 'ska1-mid.NA.11km.2048in2asec.psf.gaumod.txt'
 X = pl.loadtxt(data);
 x = X[:,0];
