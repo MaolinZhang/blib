@@ -1,3 +1,6 @@
+from tasks import *
+from taskinit import *
+import casac
 import numpy as np
 from scipy.optimize import curve_fit
 import matplotlib.pyplot as mpl
@@ -18,7 +21,6 @@ def fwhm(x, y, dx=0.001):
 	i1 = pl.where(y_diff==y_diff_sorted[0]);
 	i2 = pl.where(y_diff==y_diff_sorted[1]);
 	fwhm = pl.absolute(xx[i1]-xx[i2]);
-	#pl.plot(xx, ym, label='xx,ym');
 	return hm, fwhm, xx, ym
 
 def gauss2(x, a, x0, s, a2, x02, s2):
@@ -33,15 +35,18 @@ def rotmax(theta):
 	return R;
 
 
-def imslice(v, theta, x0, y0):
+def imslice(myimage, v, theta, x0, y0, D):
+	ia.open(myimage);
 	pix = pl.absolute(pl.round_((ia.summary()['incr']*180./pl.pi)*3600.)[0])
-	if v=='major'
+	if v=='major':
 		v = [0., D];
-	if v=='minor';
-		v = [D., 0];
+		v2 = [0., -D];
+	if v=='minor':
+		v = [D, 0];
+		v2 = [-D, 0];
 	x1 = pl.array((v));
 	x1r = pl.dot(rotmax(theta), x1);
-	x2 = pl.array((v));
+	x2 = pl.array((v2));
 	x2r = pl.dot(rotmax(theta), x2);
 	j1 = x0+x1r[0]; 
 	j2 = x0+x2r[0];
@@ -50,4 +55,5 @@ def imslice(v, theta, x0, y0):
 	s = ia.getslice([j1, j2], [k1, k2])
 	x = s['distance']*pix-D*pix;
 	y = s['pixel'];
+	ia.close();
 	return x, y
