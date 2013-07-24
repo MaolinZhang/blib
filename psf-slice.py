@@ -31,11 +31,6 @@ if len(sys.argv)==1:
 	parser.print_help();
 	dummy = sys.exit(0);
 
-#if options.fit.upper()=='TRUE':
-#	print options.fit
-#	print 'yes', 
-#	sys.exit(0);
-
 
 myimage = options.f;
 deg2rad = pl.pi/180.;
@@ -81,6 +76,7 @@ pl.xlabel('Offset [arcsec]');
 pl.ylabel('Gain')
 pl.savefig(options.o, dpi=300)
 pl.close();
+print "PSF FWHM {0:.3f}arcsec by {1:.3f}arcsec" .format(f_major[0], f_minor[0])
 #pl.savetxt(options.o.replace('.png','.txt'), zip(minor_slice['distance']*pix-D*pix, minor_slice['pixel']), fmt='%10.5f');
 
 
