@@ -8,9 +8,19 @@ import pylab as pl
 global deg2rad
 deg2rad = pl.pi/180.;
 
-def fwhm(x, y, dx=0.001):
+def fwhm(x, y):
+	hm = pl.amax(y/2.0);
+	y_diff = pl.absolute(y-hm);
+	y_diff_sorted = pl.sort(y_diff);
+	i1 = pl.where(y_diff==y_diff_sorted[0]);
+	i2 = pl.where(y_diff==y_diff_sorted[1]);
+	fwhm = pl.absolute(x[i1]-x[i2]);
+	return hm, fwhm
+
+def fwhm_2gauss(x, y, dx=0.001):
 	'''
 	Finds the FWHM for the profile y(x), with accuracy dx=0.001
+	Uses a 2-Gauss 1D fit.
 	'''
 	popt, pcov = curve_fit(gauss2, x, y);
 	xx = pl.arange(pl.amin(x), pl.amax(x)+dx, dx);
@@ -52,7 +62,7 @@ def imslice(myimage, v, theta, x0, y0, D):
 	j2 = x0+x2r[0];
 	k1 = y0+x1r[1]; 
 	k2 = y0+x2r[1];
-	s = ia.getslice([j1, j2], [k1, k2])
+	s = ia.getslice([j1, j2], [k1, k2], npts=10000)
 	x = s['distance']*pix-D*pix;
 	y = s['pixel'];
 	ia.close();
