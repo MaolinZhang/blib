@@ -70,7 +70,7 @@ if options.fit.upper()=='TRUE':
 else:
 	hm_major, f_major = blib.fwhm(x_major, y_major);
 	pl.hlines(hm_major, -f_major/2, f_major/2, color='gray', label='FWHM-Minor');
-print f_major; 
+#print f_major; 
 pl.ylim(pl.amin(y_major)-0.1, pl.amax(y_major)+0.1);
 pl.xlabel('Offset [arcsec]');
 pl.ylabel('Gain')
