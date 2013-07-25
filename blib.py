@@ -62,7 +62,7 @@ def imslice(myimage, v, theta, x0, y0, D):
 	j2 = x0+x2r[0];
 	k1 = y0+x1r[1]; 
 	k2 = y0+x2r[1];
-	s = ia.getslice([j1, j2], [k1, k2], npts=10000)
+	s = ia.getslice([j1, j2], [k1, k2], npts=500, method='linear')
 	x = s['distance']*pix-D*pix;
 	y = s['pixel'];
 	ia.close();

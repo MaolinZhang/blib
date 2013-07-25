@@ -28,7 +28,8 @@ parser.add_option("-t", type='float', dest='t', default=90.,
 	help = 'Angle of Major Axis [90deg]')
 parser.add_option('-o', type='string', dest='o', default=None, 
 	help = 'Name of plotfile [None]');
-
+parser.add_option('-d', type='float', dest='d', default=60., 
+	help = 'Length of slice in pixels [60]')
 (options, args) = parser.parse_args();
 
 if len(sys.argv)==1: 
@@ -43,7 +44,7 @@ fit_file = options.f;
 x0 = options.x;
 y0 = options.y;
 pa = options.t;
-D = 60.;
+D = options.d;
 x_psf_major, y_psf_major = blib.imslice(psf_file, v='major', theta=pa, x0=x0, y0=y0, D=D);
 hm_psf_major, fwhm_psf_major = blib.fwhm(x_psf_major, y_psf_major);
 x_psf_minor, y_psf_minor = blib.imslice(psf_file, v='minor', theta=pa, x0=x0, y0=y0, D=D);
